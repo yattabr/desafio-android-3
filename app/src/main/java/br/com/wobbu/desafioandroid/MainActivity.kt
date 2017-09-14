@@ -1,0 +1,42 @@
+package br.com.wobbu.desafioandroid
+
+import android.graphics.Color
+import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import devlight.io.library.ntb.NavigationTabBar
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+
+        var listFragments = ArrayList<Fragment>()
+        listFragments.add(GitHubFragment())
+        listFragments.add(PerfilFragment())
+        var adapter = MainViewPagerAdapter(supportFragmentManager, listFragments)
+        viewPager.adapter = adapter
+
+        var models = ArrayList<NavigationTabBar.Model>()
+        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.ic_fork), Color.parseColor("#4075ab")).title("GitHub").build())
+        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.ic_star), Color.parseColor("#C83F38")).title("Perfil").build())
+
+        ntb.models = models
+        ntb.setViewPager(viewPager)
+
+        ntb.titleMode = NavigationTabBar.TitleMode.ACTIVE
+        ntb.badgeGravity = NavigationTabBar.BadgeGravity.BOTTOM
+        ntb.badgePosition = NavigationTabBar.BadgePosition.CENTER
+        ntb.setIsBadged(true)
+        ntb.setIsTitled(true)
+        ntb.setIsTinted(true)
+        ntb.setIsBadgeUseTypeface(true)
+        ntb.setIsSwiped(true)
+        ntb.badgeSize = 10f
+        ntb.titleSize = 10f
+        ntb.iconSizeFraction = 0.5f
+    }
+}

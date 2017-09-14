@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Desafio Android</string>
+    <string name="ios">IOS</string>
+    <string name="developer">Desenvolvedor</string>
+    <string name="android">Android</string>
+    <string name="my_name">Eduardo Ewerton</string>
+    <string name="my_city">Brasília - Brazil</string>
+    <string name="text_profile">“Acho que vocês ainda não estão prontos para isso. Mas seus filhos vão adorar.”</string>
+    <string name="back_to_the_future_i">De Volta Para o Futuro I - Marty McFly</string>
+</resources>
