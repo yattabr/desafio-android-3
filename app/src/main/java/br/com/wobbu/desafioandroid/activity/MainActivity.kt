@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import br.com.wizsolucoes.copa_prototipo.utils.MySharedPreference
 import br.com.wobbu.desafioandroid.R
 import br.com.wobbu.desafioandroid.adapters.MainViewPagerAdapter
 import br.com.wobbu.desafioandroid.fragments.GitHubFragment
@@ -24,8 +25,8 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = adapter
 
         var models = ArrayList<NavigationTabBar.Model>()
-        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.github), Color.parseColor("#4075ab")).title("GitHub").build())
-        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.user), Color.parseColor("#C83F38")).title("Perfil").build())
+        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.github), Color.parseColor("#FFFFFF")).title("GitHub").build())
+        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.user), Color.parseColor("#FFFFFF")).title("Perfil").build())
 
         ntb.models = models
         ntb.setViewPager(viewPager)

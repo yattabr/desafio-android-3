@@ -2,7 +2,10 @@ package br.com.wobbu.desafioandroid.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.RecyclerView.OnScrollListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +19,7 @@ import br.com.wobbu.desafioandroid.models.Repositories
 import br.com.wobbu.desafioandroid.utils.MyConstants
 import kotlinx.android.synthetic.main.fragment_github.view.*
 import kotlinx.android.synthetic.main.view_alert.view.*
+import org.jetbrains.anko.support.v4.act
 
 /**
  * Created by eduardoewerton on 13/09/17.
@@ -24,44 +28,93 @@ class GitHubFragment : Fragment() {
 
     lateinit var controller: GitHubController
     lateinit var mView: View
+    lateinit var mLayoutManager: LinearLayoutManager
+    lateinit var repositoriesList: ArrayList<Repositories.RepositoryItems>
+    lateinit var adapter: GitHubAdapter
+
+    var loading: Boolean = true
+    var pastVisiblesItems: Int = 0
+    var visibleItemCount: Int = 0
+    var totalItemCount: Int = 0
+    var pageCount: Int = 1
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater!!.inflate(R.layout.fragment_github, container, false)
 
         controller = GitHubController(activity)
-        mView.recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayout.VERTICAL, false)
+        repositoriesList = ArrayList<Repositories.RepositoryItems>()
+
+        mLayoutManager = LinearLayoutManager(activity, LinearLayout.VERTICAL, false)
+        mView.recyclerView.layoutManager = mLayoutManager
+        mView.recyclerView.addOnScrollListener(endlessRecyclerView)
+
         mView.bt_ok.setOnClickListener(okClick)
 
-        getRepositories()
+
+
+        getRepositories(pageCount)
 
         return mView
     }
 
-    fun getRepositories() {
-        val cache = MySharedPreference(activity).getString(MyConstants().LIST_REPOSITORIES_CACHE)
-        if (cache.isNotEmpty()) {
-            mView.viewAlert.visibility = View.VISIBLE
-            controller.getListFromCache(cache) { result ->
+    fun getRepositories(pageCount: Int) {
+//        val cache = MySharedPreference(activity).getString(MyConstants().LIST_REPOSITORIES_CACHE)
+//        if (cache.isNotEmpty()) {
+//            mView.viewAlert.visibility = View.VISIBLE
+//            controller.getListFromCache(cache) { result ->
+//                setResultRecyclerView(result)
+//            }
+//        } else {
+        mView.viewAlert.visibility = View.GONE
+        controller.getRepositoriesAPI(pageCount) { result ->
+            if (pageCount > 1) {
+                addListToAdapter(result)
+            } else {
                 setResultRecyclerView(result)
             }
-        } else {
-            mView.viewAlert.visibility = View.GONE
-            controller.getRepositoriesAPI { result ->
-                setResultRecyclerView(result)
-            }
+//            }
         }
     }
 
     fun setResultRecyclerView(result: Repositories) {
-        mView.recyclerView.adapter = GitHubAdapter(context, result.items!!) {
+        repositoriesList = result.items!!
+        adapter = GitHubAdapter(context, result.items!!) {
             click ->
             MyFragmentManager(activity, R.id.fragmentContainer).addFragment(PullRequestFragment(click.name, click.owner!!.login))
         }
+        mView.recyclerView.adapter = adapter
         mView.loading.hide()
+        loading = true
+    }
+
+    fun addListToAdapter(result: Repositories) {
+        adapter.addList(result.items!!)
+        mView.loading.hide()
+        loading = true
     }
 
     val okClick = View.OnClickListener {
         mView.viewAlert.visibility = View.GONE
     }
+
+    val endlessRecyclerView = object : OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            if (dy > 0) {
+                visibleItemCount = mLayoutManager.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+
+                if (loading) {
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        loading = false;
+                        mView.loading.show()
+                        pageCount += 1
+                        getRepositories(pageCount)
+                    }
+                }
+            }
+        }
+    }
+
 
 }

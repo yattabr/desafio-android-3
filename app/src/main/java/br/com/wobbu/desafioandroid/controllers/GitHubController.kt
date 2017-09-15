@@ -1,18 +1,21 @@
 package br.com.wobbu.desafioandroid.controllers
 
 import android.content.Context
+import android.support.v4.app.FragmentActivity
+import android.support.v7.app.AppCompatActivity
 import br.com.wizsolucoes.copa_prototipo.utils.MySharedPreference
 import br.com.wizsolucoes.copa_prototipo.utils.ReadJson
 import br.com.wobbu.desafioandroid.models.Repositories
 import br.com.wobbu.desafioandroid.utils.MyConstants
 import com.google.gson.Gson
+import org.jetbrains.anko.activityManager
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 /**
  * Created by eduardoewerton on 14/09/17.
  */
-class GitHubController(var context: Context) {
+class GitHubController(var context: FragmentActivity) {
 
     /*
     Busca a lista de Repositorios no GitHub
@@ -20,10 +23,10 @@ class GitHubController(var context: Context) {
     Após receber o retorno da API, populo um Objeto
     Uso o Unit para enviar o Objeto populado para a Activity
      */
-    fun getRepositoriesAPI(result: (Repositories) -> Unit) {
+    fun getRepositoriesAPI(pageCount: Int, result: (Repositories) -> Unit) {
         doAsync {
             // Busca a URL
-            var url = MyConstants().GET_REPOSITORIES
+            var url = String.format(MyConstants().GET_REPOSITORIES, pageCount)
 
             // Converte o resultado da API em Json String
             var json = ReadJson().readJsonGET(url)
@@ -34,10 +37,13 @@ class GitHubController(var context: Context) {
             // Lê o Json e popula um Objeto
             var response = Gson().fromJson(json, Repositories::class.java)
 
+
             // Deve-se usar o uiThread para voltar a trabalhar na Main thread.
             uiThread {
                 // Envia o Objeto para a Activity.
-                result(response)
+                if (!context.isFinishing) {
+                    result(response)
+                }
             }
         }
     }

@@ -29,6 +29,13 @@ class GitHubAdapter(var context: Context, var items: ArrayList<Repositories.Repo
         return items.size
     }
 
+    fun addList(list: ArrayList<Repositories.RepositoryItems>) {
+        for (item in list) {
+            items.add(item)
+        }
+        this.notifyDataSetChanged()
+    }
+
     class ViewHolder(var context: Context, itemView: View, var click: (Repositories.RepositoryItems) -> Unit) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         lateinit var item: Repositories.RepositoryItems

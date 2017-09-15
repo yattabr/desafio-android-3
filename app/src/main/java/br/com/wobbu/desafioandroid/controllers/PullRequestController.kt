@@ -1,6 +1,8 @@
 package br.com.wobbu.desafioandroid.controllers
 
 import android.content.Context
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import br.com.wizsolucoes.copa_prototipo.utils.MySharedPreference
 import br.com.wizsolucoes.copa_prototipo.utils.ReadJson
 import br.com.wobbu.desafioandroid.models.PullRequest
@@ -13,7 +15,7 @@ import org.jetbrains.anko.uiThread
 /**
  * Created by eduardoewerton on 15/09/17.
  */
-class PullRequestController(var context: Context, var repositoryName: String, var repositoryOwner: String) {
+class PullRequestController(var context: Fragment, var repositoryName: String, var repositoryOwner: String) {
 
     /*
      Busca a lista de Repositorios no GitHub
@@ -30,7 +32,7 @@ class PullRequestController(var context: Context, var repositoryName: String, va
             var json = ReadJson().readJsonGET(url)
 
             // Salva a lista do GitHub no SharedPreference para cache
-            MySharedPreference(context).setString(MyConstants().PULL_REQUEST_CACHE, json)
+            MySharedPreference(context.activity).setString(MyConstants().PULL_REQUEST_CACHE, json)
 
             // Lê o Json e popula um Objeto
             var response = Gson().fromJson(json, Array<PullRequest>::class.java)
@@ -38,7 +40,9 @@ class PullRequestController(var context: Context, var repositoryName: String, va
             // Deve-se usar o uiThread para voltar a trabalhar na Main thread.
             uiThread {
                 // Envia o Objeto para a Activity.
-                result(response)
+                if (!context.isRemoving) {
+                    result(response)
+                }
             }
         }
     }

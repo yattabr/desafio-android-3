@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName
  */
 class PullRequest {
 
+    @SerializedName("html_url")
+    var url: String = ""
     @SerializedName("title")
     var title: String = ""
     @SerializedName("body")

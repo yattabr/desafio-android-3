@@ -8,9 +8,10 @@
     <color name="whiteOpacity">#38ffffff</color>
     <color name="yellow">#DC9400</color>
     <color name="myBlue">#4075ab</color>
+    <color name="myBlueOpacity">#344075ab</color>
 
     <array name="colors">
         <item>#4075ab</item>
-        <item>#C83F38</item>
+        <item>#DC9400</item>
     </array>
 </resources>

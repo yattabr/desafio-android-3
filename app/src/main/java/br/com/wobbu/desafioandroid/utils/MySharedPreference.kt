@@ -34,4 +34,8 @@ class MySharedPreference(context: Context) {
         return pref.getInt(key, 0)
     }
 
+    fun cleanAll() {
+        pref.edit().clear().commit()
+    }
+
 }

@@ -15,6 +15,9 @@ import br.com.wobbu.desafioandroid.models.PullRequest
 import kotlinx.android.synthetic.main.fragment_github.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.view_alert.view.*
+import android.content.Intent
+import android.net.Uri
+
 
 /**
  * Created by eduardoewerton on 14/09/17.
@@ -27,13 +30,11 @@ class PullRequestFragment(var repositoryName: String, var repositoryOwner: Strin
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mView = inflater!!.inflate(R.layout.fragment_pull_request, container, false)
 
-        controller = PullRequestController(activity, repositoryName, repositoryOwner)
+        controller = PullRequestController(this, repositoryName, repositoryOwner)
         mView.recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayout.VERTICAL, false)
         mView.bt_ok.setOnClickListener(okClick)
 
         MyToolbar().initToolbar(this, mView.toolbar, repositoryName)
-
-
 
         getPullRequest()
 
@@ -47,7 +48,12 @@ class PullRequestFragment(var repositoryName: String, var repositoryOwner: Strin
     }
 
     fun setResultRecyclerView(result: Array<PullRequest>) {
-        mView.recyclerView.adapter = PullRequestAdapter(context, result)
+        mView.recyclerView.adapter = PullRequestAdapter(context, result) {
+            click ->
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(click.url)
+            startActivity(i)
+        }
         mView.loading.hide()
     }
 
