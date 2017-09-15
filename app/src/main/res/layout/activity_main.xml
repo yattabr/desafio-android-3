@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.wobbu.desafioandroid.MainActivity">
+    tools:context="br.com.wobbu.desafioandroid.activity.MainActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
@@ -30,7 +30,11 @@
         app:ntb_tinted="true"
         app:ntb_title_mode="all"
         app:ntb_title_size="10sp"
-        app:ntb_titled="true"
-        app:ntb_typeface="fonts/custom_typeface.ttf" />
+        app:ntb_titled="true" />
 
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

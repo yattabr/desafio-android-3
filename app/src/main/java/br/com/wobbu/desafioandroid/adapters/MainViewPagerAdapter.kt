@@ -1,4 +1,4 @@
-package br.com.wobbu.desafioandroid
+package br.com.wobbu.desafioandroid.adapters
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

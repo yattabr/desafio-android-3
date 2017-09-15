@@ -1,9 +1,13 @@
-package br.com.wobbu.desafioandroid
+package br.com.wobbu.desafioandroid.activity
 
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import br.com.wobbu.desafioandroid.R
+import br.com.wobbu.desafioandroid.adapters.MainViewPagerAdapter
+import br.com.wobbu.desafioandroid.fragments.GitHubFragment
+import br.com.wobbu.desafioandroid.fragments.PerfilFragment
 import devlight.io.library.ntb.NavigationTabBar
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -13,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         var listFragments = ArrayList<Fragment>()
         listFragments.add(GitHubFragment())
         listFragments.add(PerfilFragment())
@@ -21,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = adapter
 
         var models = ArrayList<NavigationTabBar.Model>()
-        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.ic_fork), Color.parseColor("#4075ab")).title("GitHub").build())
-        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.ic_star), Color.parseColor("#C83F38")).title("Perfil").build())
+        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.github), Color.parseColor("#4075ab")).title("GitHub").build())
+        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.user), Color.parseColor("#C83F38")).title("Perfil").build())
 
         ntb.models = models
         ntb.setViewPager(viewPager)
