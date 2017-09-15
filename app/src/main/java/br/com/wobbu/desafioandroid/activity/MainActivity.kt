@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = adapter
 
         var models = ArrayList<NavigationTabBar.Model>()
-        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.github), Color.parseColor("#FFFFFF")).title("GitHub").build())
-        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.user), Color.parseColor("#FFFFFF")).title("Perfil").build())
+        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.github), Color.parseColor("#FFFFFF")).title(getString(R.string.github)).build())
+        models.add(NavigationTabBar.Model.Builder(resources.getDrawable(R.drawable.user), Color.parseColor("#FFFFFF")).title(getString(R.string.profile)).build())
 
         ntb.models = models
         ntb.setViewPager(viewPager)

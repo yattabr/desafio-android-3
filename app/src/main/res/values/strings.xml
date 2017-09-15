@@ -5,6 +5,8 @@
     <string name="android">Android</string>
     <string name="my_name">Eduardo Ewerton</string>
     <string name="my_city">Brasília - Brazil</string>
-    <string name="text_profile">“Acho que vocês ainda não estão prontos para isso. Mas seus filhos vão adorar.”</string>
+    <string name="text_profile">“ACHO QUE VOCÊS AINDA NÃO ESTÃO PRONTOS PARA ISSO. MAS SEUS FILHOS VÃO ADORAR!”</string>
     <string name="back_to_the_future_i">De Volta Para o Futuro I - Marty McFly</string>
+    <string name="github">GitHub</string>
+    <string name="profile">Perfil</string>
 </resources>
