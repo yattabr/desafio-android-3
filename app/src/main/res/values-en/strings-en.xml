@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Android Challenge</string>
+    <string name="ios">IOS</string>
+    <string name="developer">Developer</string>
+    <string name="android">Android</string>
+    <string name="my_name">Eduardo Ewerton</string>
+    <string name="my_city">Brasília - Brazil</string>
+    <string name="text_profile">“I GUESS YOU GUYS AREN’T READY FOR THAT YET. BUT YOUR KIDS ARE GONNA LOVE IT!”</string>
+    <string name="back_to_the_future_i">Back To The Future I - Marty McFly</string>
+    <string name="github">GitHub</string>
+    <string name="profile">Profile</string>
+</resources>
