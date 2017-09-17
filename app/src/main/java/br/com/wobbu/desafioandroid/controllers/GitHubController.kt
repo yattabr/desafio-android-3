@@ -23,7 +23,10 @@ class GitHubController(var context: FragmentActivity) {
     Após receber o retorno da API, populo um Objeto
     Uso o Unit para enviar o Objeto populado para a Activity
      */
-    fun getRepositoriesAPI(pageCount: Int, result: (Repositories) -> Unit) {
+    fun getRepositoriesAPI(pageCount: Int, result: (Repositories) -> Unit): Boolean {
+        if (pageCount <= 0)
+            return false
+
         doAsync {
             // Busca a URL
             var url = String.format(MyConstants().GET_REPOSITORIES, pageCount)
@@ -37,7 +40,6 @@ class GitHubController(var context: FragmentActivity) {
             // Lê o Json e popula um Objeto
             var response = Gson().fromJson(json, Repositories::class.java)
 
-
             // Deve-se usar o uiThread para voltar a trabalhar na Main thread.
             uiThread {
                 // Envia o Objeto para a Activity.
@@ -46,6 +48,8 @@ class GitHubController(var context: FragmentActivity) {
                 }
             }
         }
+
+        return true
     }
 
     //Busca lista salva na Cache

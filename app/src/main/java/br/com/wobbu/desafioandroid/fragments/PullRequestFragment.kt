@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.view_alert.view.*
 import android.content.Intent
 import android.net.Uri
+import org.jetbrains.anko.support.v4.toast
 
 
 /**
@@ -50,15 +51,22 @@ class PullRequestFragment(var repositoryName: String, var repositoryOwner: Strin
     fun setResultRecyclerView(result: Array<PullRequest>) {
         mView.recyclerView.adapter = PullRequestAdapter(context, result) {
             click ->
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(click.url)
-            startActivity(i)
+            if (click.url.isNotEmpty()) {
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(click.url)
+                startActivity(i)
+            } else {
+                toast("Não temos url para esse pullRequest.")
+            }
         }
         mView.loading.hide()
+    }
+
+    fun setIssues() {
+
     }
 
     val okClick = View.OnClickListener {
         mView.viewAlert.visibility = View.GONE
     }
-
 }

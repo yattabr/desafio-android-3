@@ -14,7 +14,7 @@ class Repositories {
     @SerializedName("items")
     var items: ArrayList<RepositoryItems>? = null
 
-    inner class RepositoryItems {
+    class RepositoryItems {
         @SerializedName("id")
         var id: String = ""
         @SerializedName("name")
@@ -31,7 +31,7 @@ class Repositories {
         var forks: String = ""
     }
 
-    inner class OwnerItem {
+    class OwnerItem {
         @SerializedName("login")
         var login: String = ""
         @SerializedName("id")

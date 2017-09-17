@@ -2,7 +2,6 @@ package br.com.wobbu.desafioandroid.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.OnScrollListener
@@ -11,15 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import br.com.wizsolucoes.copa_prototipo.utils.MyFragmentManager
-import br.com.wizsolucoes.copa_prototipo.utils.MySharedPreference
 import br.com.wobbu.desafioandroid.R
 import br.com.wobbu.desafioandroid.adapters.GitHubAdapter
 import br.com.wobbu.desafioandroid.controllers.GitHubController
 import br.com.wobbu.desafioandroid.models.Repositories
-import br.com.wobbu.desafioandroid.utils.MyConstants
+import kotlinx.android.synthetic.main.fragment_github.*
 import kotlinx.android.synthetic.main.fragment_github.view.*
 import kotlinx.android.synthetic.main.view_alert.view.*
-import org.jetbrains.anko.support.v4.act
 
 /**
  * Created by eduardoewerton on 13/09/17.
@@ -50,29 +47,24 @@ class GitHubFragment : Fragment() {
 
         mView.bt_ok.setOnClickListener(okClick)
 
-
-
         getRepositories(pageCount)
 
         return mView
     }
 
     fun getRepositories(pageCount: Int) {
-//        val cache = MySharedPreference(activity).getString(MyConstants().LIST_REPOSITORIES_CACHE)
-//        if (cache.isNotEmpty()) {
-//            mView.viewAlert.visibility = View.VISIBLE
-//            controller.getListFromCache(cache) { result ->
-//                setResultRecyclerView(result)
-//            }
-//        } else {
         mView.viewAlert.visibility = View.GONE
         controller.getRepositoriesAPI(pageCount) { result ->
-            if (pageCount > 1) {
-                addListToAdapter(result)
+            if (result.items!!.isNotEmpty()) {
+                txt_empty_list.visibility = View.GONE
+                if (pageCount > 1) {
+                    addListToAdapter(result)
+                } else {
+                    setResultRecyclerView(result)
+                }
             } else {
-                setResultRecyclerView(result)
+                txt_empty_list.visibility = View.VISIBLE
             }
-//            }
         }
     }
 

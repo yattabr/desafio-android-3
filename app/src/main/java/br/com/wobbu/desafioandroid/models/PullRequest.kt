@@ -22,7 +22,7 @@ class PullRequest {
     @SerializedName("author_association")
     var authorAssociation: String = ""
 
-    inner class User {
+    class User {
         @SerializedName("login")
         var login: String = ""
         @SerializedName("id")

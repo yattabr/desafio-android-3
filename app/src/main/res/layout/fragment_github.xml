@@ -18,6 +18,15 @@
         app:indicatorColor="@color/myBlue"
         app:indicatorName="PacmanIndicator" />
 
+    <TextView
+        android:id="@+id/txt_empty_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="A lista está vazia"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
     <include
         android:id="@+id/viewAlert"
         layout="@layout/view_alert"
